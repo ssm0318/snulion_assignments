@@ -1,3 +1,6 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  get '/feeds' => 'feeds#index'
+  get '/feeds/new' => 'feeds#new'
+  post '/feeds' => 'feeds#create'
+  delete '/feeds/:id' => 'feeds#destroy'
 end

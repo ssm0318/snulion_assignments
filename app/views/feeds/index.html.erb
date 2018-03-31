@@ -1,0 +1,10 @@
+<h1>Feed Page</h1>
+<a href='/feeds/new'>New Feed</a>
+
+<% @feeds.each do |f| %>
+    <div style='border: 1px solid black;'>
+        <a href='/feeds/<%= f.id %>' data-method='DELETE'>Delete</a>
+        <div><%= f.title %></div>
+        <div><%= f.content %></div>
+    </div>
+<% end %>
