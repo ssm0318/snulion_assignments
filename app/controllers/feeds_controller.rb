@@ -27,5 +27,19 @@ class FeedsController < ApplicationController
        Feed.destroy(feed_id)
        redirect_to action: 'index' 
     end
+
+    def edit
+        @feed = Feed.find(params[:id])
+        render 'edit'
+    end
+
+    def update
+        @feed_id = params[:id]
+        feed = Feed.find(params[:id])
+        feed.title = params[:title]
+        feed.content = params[:content]
+        feed.save
+        redirect_to action: 'index'
+    end
 end
 

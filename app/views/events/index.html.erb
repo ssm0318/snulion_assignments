@@ -1,0 +1,11 @@
+<h1>events page</h1>
+<a href='/events/new'>Click here to create new event</a>
+
+<% @events.each do |e| %>
+	<div style='border: 1px solid black;'>
+        <a href='/events/edit/<%= e.id %>' method='GET'>Update</a>
+		<a href='/events/<%= e.id %>' data-method='DELETE'>Delete</a>
+		<div><%= e.datetime %></div>
+		<div><%= e.title %></div>
+	</div>
+<% end %>

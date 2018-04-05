@@ -1,0 +1,6 @@
+<h1>Edit Post</h1>
+<form action='/events/<%= @event.id%>' method='POST'>
+    Date+Time: <input type="datetime-local" name="datetime" value="<%= @event.datetime%>">
+    Title: <input type="text" name="title" value="<%= @event.title%>">
+    <button>Submit</button>
+</form>
