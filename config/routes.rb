@@ -7,8 +7,8 @@ Rails.application.routes.draw do
   post '/events' => 'events#create'
   delete '/feeds/:id' => 'feeds#destroy'
   delete '/events/:id' => 'events#destroy'
-  get '/feeds/edit/:id' => 'feeds#edit'
-  get '/events/edit/:id' => 'events#edit'
+  get '/feeds/:id/edit' => 'feeds#edit'
+  get '/events/:id/edit' => 'events#edit'
   post '/feeds/:id' => 'feeds#update'
   post '/events/:id' => 'events#update'
 end
