@@ -2,10 +2,22 @@
 <a href='/feeds/new'>New Feed</a>
 
 <% @feeds.each do |f| %>
-    <div style='border: 1px solid black;'>
-        <a href='/feeds/<%= f.id %>/edit' data-method='GET'>Edit</a>
+    <div style='border: 1px solid black; margin: 10px;'>
+        <a href='/feeds/<%= f.id %>/edit'>Edit</a>
         <a href='/feeds/<%= f.id %>' data-method='DELETE'>Delete</a>
         <div><%= f.title %></div>
         <div><%= f.content %></div>
+        <% f.feed_comments.each_with_index do |comment, i| %>
+            <div style='border: 3px solid green;'>
+                <a href='/feeds/comments/<%= comment.id%>' data-method='DELETE'>Delete</a>
+                <%= i+1 %>
+                <%= comment.content %>
+            </div>
+        <% end %>
+
+        <form action='/feeds/<%= f.id%>/comment_create' method='POST'>
+            Comment: <input type="text" name="content">
+            <button class="btn btn-default" type="submit">Comment</button>
+        </form>
     </div>
 <% end %>

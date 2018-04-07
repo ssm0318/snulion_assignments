@@ -11,4 +11,8 @@ Rails.application.routes.draw do
   get '/events/:id/edit' => 'events#edit'
   post '/feeds/:id' => 'feeds#update'
   post '/events/:id' => 'events#update'
+  post '/feeds/:id/comment_create' => 'feeds#comment_create'
+  delete '/feeds/comments/:id' => 'feeds#comment_destroy'
+  post '/events/:id/comment_create' => 'events#comment_create'
+  delete '/events/comments/:id' => 'events#comment_destroy'
 end

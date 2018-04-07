@@ -41,5 +41,17 @@ class FeedsController < ApplicationController
         feed.save
         redirect_to action: 'index'
     end
+
+    def comment_create
+        @comment = FeedComment.new(feed_id: params[:id], content: params[:content])
+        @comment.save
+        redirect_to action: 'index'
+    end
+
+    def comment_destroy
+        comment_id = params[:id]
+        FeedComment.destroy(comment_id)
+        redirect_to action: 'index'
+    end
 end
 

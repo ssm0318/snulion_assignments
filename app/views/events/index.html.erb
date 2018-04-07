@@ -2,10 +2,22 @@
 <a href='/events/new'>Click here to create new event</a>
 
 <% @events.each do |e| %>
-	<div style='border: 1px solid black;'>
+	<div style='border: 1px solid black; margin: 10px;'>
         <a href='/events/<%= e.id %>'/edit>Update</a>
 		<a href='/events/<%= e.id %>' data-method='DELETE'>Delete</a>
 		<div><%= e.datetime %></div>
 		<div><%= e.title %></div>
-	</div>
+        <% e.event_comments.each_with_index do |comment, i| %>
+            <div style='border: 3px solid green;'>
+                <a href='/events/comments/<%= comment.id%>' data-method='DELETE'>Delete</a>
+                <%= i+1%>.
+                <%= comment.content %>
+            </div>
+        <% end %>
+
+        <form action='/events/<%= e.id%>/comment_create' method='POST'>
+            Comment: <input type="text" name="content">
+            <button type="submit">Comment</button>
+        </form>
+    </div>
 <% end %>
