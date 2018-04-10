@@ -52,4 +52,16 @@ class EventsController < ApplicationController
         EventComment.destroy(comment_id)
         redirect_to action: 'index'
     end
+
+    def reply_create
+        @reply = EventReply.new(event_comment_id: params[:id], content: params[:content])
+        @reply.save
+        redirect_to action: 'index'
+    end
+
+    def reply_destroy
+        reply_id = params[:id]
+        EventReply.destroy(reply_id)
+        redirect_to action: 'index'
+    end
 end

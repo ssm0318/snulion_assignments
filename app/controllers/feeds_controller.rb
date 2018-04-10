@@ -53,5 +53,17 @@ class FeedsController < ApplicationController
         FeedComment.destroy(comment_id)
         redirect_to action: 'index'
     end
+
+    def reply_create
+        @reply = FeedReply.new(feed_comment_id: params[:id], content: params[:content])
+        @reply.save
+        redirect_to action: 'index'
+    end
+
+    def reply_destroy
+        reply_id = params[:id]
+        FeedReply.destroy(reply_id)
+        redirect_to action: 'index'
+    end
 end
 

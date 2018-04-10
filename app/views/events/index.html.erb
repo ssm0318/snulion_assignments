@@ -8,10 +8,21 @@
 		<div><%= e.datetime %></div>
 		<div><%= e.title %></div>
         <% e.event_comments.each_with_index do |comment, i| %>
-            <div style='border: 3px solid green;'>
+            <div style='border: 3px solid green; margin: 15px;'>
                 <a href='/events/comments/<%= comment.id%>' data-method='DELETE'>Delete</a>
                 <%= i+1%>.
                 <%= comment.content %>
+                <% comment.event_replies.each_with_index do |reply, j| %>
+                    <div style='border: 2px solid blue; margin: 15px;'>
+                        <a href='/events/replies/<%= reply.id%>' data-method='DELETE'>Delete</a>
+                        <%= j+1%>
+                        <%= reply.content %>
+                    </div>
+                <% end %>
+                <form action='/events/<%= comment.id%>/reply_create' method='POST'>
+                    Reply: <input type="text" name="content">
+                    <button type="submit">Reply</button>
+                </form>
             </div>
         <% end %>
 

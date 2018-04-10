@@ -15,4 +15,8 @@ Rails.application.routes.draw do
   delete '/feeds/comments/:id' => 'feeds#comment_destroy'
   post '/events/:id/comment_create' => 'events#comment_create'
   delete '/events/comments/:id' => 'events#comment_destroy'
+  post '/feeds/:id/reply_create' => 'feeds#reply_create'
+  delete 'feeds/replies/:id' => 'feeds#reply_destroy'
+  post '/events/:id/reply_create' => 'events#reply_create'
+  delete 'events/replies/:id' => 'events#reply_destroy'
 end

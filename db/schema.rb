@@ -10,18 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180407043814) do
-
-  create_table "comments", force: :cascade do |t|
-    t.string "content"
-    t.integer "feed_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
+ActiveRecord::Schema.define(version: 20180410103110) do
 
   create_table "event_comments", force: :cascade do |t|
     t.string "content"
     t.integer "event_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "event_replies", force: :cascade do |t|
+    t.string "content"
+    t.integer "event_comment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -40,9 +40,23 @@ ActiveRecord::Schema.define(version: 20180407043814) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "feed_replies", force: :cascade do |t|
+    t.string "content"
+    t.integer "feed_comment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "feeds", force: :cascade do |t|
     t.string "title"
     t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "replies", force: :cascade do |t|
+    t.string "content"
+    t.integer "feed_comment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
