@@ -67,5 +67,18 @@ class FeedsController < ApplicationController
         FeedReply.destroy(reply_id)
         redirect_to action: 'index'
     end
+
+    def comment_edit
+        @feeds = Feed.all
+        @comment_edit_id = params[:id].to_i
+        render 'index'
+    end
+
+    def comment_update
+        updated_comment = FeedComment.find(params[:id])
+        updated_comment.content = params[:content]
+        updated_comment.save
+        redirect_to action: 'index'
+    end
 end
 

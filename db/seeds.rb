@@ -23,7 +23,7 @@ for j in 1..5 do
     EventComment.create(content: "댓글입니다~", event_id: rand(1..Event.all.size), user_id: rand(1..User.all.size))
 end
 
-for k in 1..5 do
+for k in 1..10 do
     FeedReply.create(content: "대댓글입니다!!!!!!!", feed_comment_id: rand(1..FeedComment.all.size), user_id: rand(1..User.all.size))
     EventReply.create(content: "대댓글입니다!!!!!!!", event_comment_id: rand(1..EventComment.all.size), user_id: rand(1..User.all.size))
 end

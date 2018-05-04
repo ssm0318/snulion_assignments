@@ -17,7 +17,11 @@ Rails.application.routes.draw do
   post '/events/:id/comment_create' => 'events#comment_create'
   delete '/events/comments/:id' => 'events#comment_destroy'
   post '/feeds/:id/reply_create' => 'feeds#reply_create'
-  delete 'feeds/replies/:id' => 'feeds#reply_destroy'
+  delete '/feeds/replies/:id' => 'feeds#reply_destroy'
   post '/events/:id/reply_create' => 'events#reply_create'
-  delete 'events/replies/:id' => 'events#reply_destroy'
+  delete '/events/replies/:id' => 'events#reply_destroy'
+  post '/feeds/comments/:id/edit' => 'feeds#comment_edit'
+  post '/feeds/:id/comment_update' => 'feeds#comment_update'
+  post '/events/comments/:id/edit' => 'events#comment_edit'
+  post '/events/:id/comment_update' => 'events#comment_update'
 end

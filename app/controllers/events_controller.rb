@@ -69,4 +69,17 @@ class EventsController < ApplicationController
         EventReply.destroy(reply_id)
         redirect_to action: 'index'
     end
+
+    def comment_edit
+        @events = Event.all
+        @updating_comment_id = params[:id].to_i
+        render 'index'
+    end
+
+    def comment_update
+        updated_comment = EventComment.find(params[:id])
+        updated_comment.content = params[:content]
+        updated_comment.save
+        redirect_to action: 'index'
+    end
 end

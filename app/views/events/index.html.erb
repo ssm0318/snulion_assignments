@@ -8,40 +8,48 @@
             <a href='/events/<%= e.id %>' data-method='DELETE'>Delete</a>
         <% end %>
 		<div><%= e.datetime %></div>
-		<div><%= e.title %></div>
-        <div><%= e.user.email %></div>
-        <div><%= e.user.name%></div>
+		<div>Title: <%= e.title %></div>
+        <div>Email: <%= e.user.email %></div>
+        <div>Name: <%= e.user.name%></div>
     
         <% e.event_comments.each_with_index do |comment, i| %>
             <div style='border: 3px solid green; margin: 15px;'>
                 <% if comment.user == current_user %>
                     <a href='/events/comments/<%= comment.id%>' data-method='DELETE'>Delete</a>
+                    <a href='/events/comments/<%= comment.id%>/edit' data-method='POST'>Edit</a>
                 <% end %>
-                <%= i+1%>
-                <%= comment.content %><br>
-                Email: <%= comment.user.email %><br>
-                Name: <%= comment.user.name %>
-                <% comment.event_replies.each_with_index do |reply, j| %>
-                    <div style='border: 2px solid blue; margin: 15px;'>
-                    <% if reply.user == current_user %>
-                        <a href='/events/replies/<%= reply.id%>' data-method='DELETE'>Delete</a>
-                    <% end %>
-                        <%= j+1%>
-                        <%= reply.content %><br>
-                        Email: <%= reply.user.email %><br>
-                        Name: <%= reply.user.name %><br>
-                    </div>
-                <% end %>
-                <form action='/events/<%= comment.id%>/reply_create' method='POST'>
-                    Reply: <input type="text" name="content">
-                    <button type="submit">Reply</button>
-                </form>
-            </div>
-            <% end %>
 
-        <form action='/events/<%= e.id%>/comment_create' method='POST'>
-            Comment: <input type="text" name="content">
-            <button type="submit">Comment</button>
-        </form>
+                <% if comment.id == @updating_comment_id %>
+                    <form action='/events/<%= comment.id%>/comment_update' method='POST'>
+                        Comment: <input type="text" name="content" value='<%=comment.content%>'>
+                        <button type="submit">Confirm Edit</button>
+                    </form>
+                <% else %>
+                    <%= i+1%>
+                    <%= comment.content %><br>
+                    Email: <%= comment.user.email %><br>
+                    Name: <%= comment.user.name %>
+                    <% comment.event_replies.each_with_index do |reply, j| %>
+                        <div style='border: 2px solid blue; margin: 15px;'>
+                        <% if reply.user == current_user %>
+                            <a href='/events/replies/<%= reply.id%>' data-method='DELETE'>Delete</a>
+                        <% end %>
+                            <%= j+1%>
+                            <%= reply.content %><br>
+                            Email: <%= reply.user.email %><br>
+                            Name: <%= reply.user.name %><br>
+                        </div>
+                    <% end %>
+                    <form action='/events/<%= comment.id%>/reply_create' method='POST'>
+                        Reply: <input type="text" name="content">
+                        <button type="submit">Reply</button>
+                    </form>
+                </div>
+                <form action='/events/<%= e.id%>/comment_create' method='POST'>
+                    Comment: <input type="text" name="content">
+                    <button type="submit">Comment</button>
+                </form>
+            <% end %>
+        <% end %>
     </div>
 <% end %>

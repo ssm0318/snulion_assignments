@@ -2,7 +2,6 @@
 <a href='/feeds/new'>New Feed</a>
 
 <% @feeds.each do |f| %>
-
     <div style='border: 1px solid black; margin: 10px;'>
         <% if f.user == current_user %>
             <a href='/feeds/<%= f.id %>/edit'>Edit</a>
@@ -12,26 +11,37 @@
         <div>Content: <%= f.content %></div>
         <div>Email: <%= f.user.email %></div>
         <div>Name: <%= f.user.name%></div>
+
         <% f.feed_comments.each_with_index do |comment, i| %>
             <div style='border: 3px solid green; margin: 15px;'>
             <% if comment.user == current_user %>
                 <a href='/feeds/comments/<%= comment.id%>' data-method='DELETE'>Delete</a>
+                <a href='/feeds/comments/<%= comment.id%>/edit' data-method='POST'>Edit</a>
             <% end %>
-                <%= i+1 %>
-                <%= comment.content %><br>
-                Email: <%= comment.user.email %><br>
-                Name: <%= comment.user.name %>
-                <% comment.feed_replies.each_with_index do |reply, j| %>
-                    <div style='border: 2px solid blue; margin: 15px;'>
-                    <% if reply.user == current_user %>
-                        <a href='/feeds/replies/<%= reply.id%>' data-method='DELETE'>Delete</a>
+                <% if comment.id == @comment_edit_id %>
+                    <form action='/feeds/<%= comment.id%>/comment_update' method='POST'>
+                        Comment: <input type="text" name="content" value = '<%= comment.content%>'>
+                        <button class="btn btn-default" type="submit">Confirm Edit</button>
+                    </form>
+                <% else %>
+                    <%= i+1 %>
+                    <%= comment.content %><br>
+                    Email: <%= comment.user.email %><br>
+                    Name: <%= comment.user.name %>
+
+                    <% comment.feed_replies.each_with_index do |reply, j| %>
+                        <div style='border: 2px solid blue; margin: 15px;'>
+                        <% if reply.user == current_user %>
+                            <a href='/feeds/replies/<%= reply.id%>' data-method='DELETE'>Delete</a>
+                        <% end %>
+                            <%= j+1 %>
+                            <%= reply.content %><br>
+                            Email: <%= reply.user.email %><br>
+                            Name: <%= reply.user.name %><br>
+                        </div>    
                     <% end %>
-                        <%= j+1 %>
-                        <%= reply.content %><br>
-                        Email: <%= reply.user.email %><br>
-                        Name: <%= reply.user.name %><br>
-                    </div>    
                 <% end %>
+
                 <form action='/feeds/<%= comment.id%>/reply_create' method='POST'>
                     Reply: <input type="text" name="content">
                     <button class="btn btn-default" type="submit">Reply</button>
