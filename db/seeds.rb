@@ -6,5 +6,22 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Feed.create(title: '안녕하세요', content: '첫글입니다.')
-Comment.create(content: '첫 리플입니다', feed_id: 1)
+User.create(email: 'hello@snulion.com', name: 'j1', password: "j1j1j1")
+User.create(email: 'bye@snulion.com', name: 'j2', password: 'j2j2j2')
+User.create(email: 'thanks@snulion.com', name: 'j3', password: 'j3j3j3')
+
+user = User.all
+user.each do |user|
+    for i in 1..2 do
+        Feed.create(
+            title: user.name + "의 feed",
+            content: user.name + "의 feed content",
+            user_id: user.id
+        )
+        Event.create(
+            title: user.name + "의 event",
+            datetime: "2018-01-01 01:00:00",
+            user_id: user.id
+        )
+    end
+end
