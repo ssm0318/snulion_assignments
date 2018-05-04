@@ -16,6 +16,7 @@ class FeedsController < ApplicationController
         feed = Feed.new
         feed.title = title
         feed.content = content
+        feed.user_id = current_user.id
         feed.save
 
         #index action으로 가서 실행해라
@@ -43,7 +44,7 @@ class FeedsController < ApplicationController
     end
 
     def comment_create
-        @comment = FeedComment.new(feed_id: params[:id], content: params[:content])
+        @comment = FeedComment.new(feed_id: params[:id], content: params[:content], user_id: current_user.id)
         @comment.save
         redirect_to action: 'index'
     end

@@ -7,11 +7,15 @@
         <a href='/feeds/<%= f.id %>' data-method='DELETE'>Delete</a>
         <div>Title: <%= f.title %></div>
         <div>Content: <%= f.content %></div>
+        <div>Email: <%= f.user.email %></div>
+        <div>Name: <%= f.user.name%></div>
         <% f.feed_comments.each_with_index do |comment, i| %>
             <div style='border: 3px solid green; margin: 15px;'>
                 <a href='/feeds/comments/<%= comment.id%>' data-method='DELETE'>Delete</a>
                 <%= i+1 %>
                 <%= comment.content %>
+                <%= comment.user.email %>
+                <%= comment.user.name %>
                 <% comment.feed_replies.each_with_index do |reply, j| %>
                     <div style='border: 2px solid blue; margin: 15px;'>
                         <a href='/feeds/replies/<%= reply.id%>' data-method='DELETE'>Delete</a>

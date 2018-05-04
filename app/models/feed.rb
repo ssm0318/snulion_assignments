@@ -1,3 +1,4 @@
 class Feed < ApplicationRecord
-    has_many :feed_comments
+    belongs_to :user
+    has_many :feed_comments, dependent: :destroy
 end

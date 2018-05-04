@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   get '/feeds' => 'feeds#index'
   get '/events' => 'events#index'
   get '/feeds/new' => 'feeds#new'
