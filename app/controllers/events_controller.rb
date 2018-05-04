@@ -59,7 +59,7 @@ class EventsController < ApplicationController
     end
 
     def reply_create
-        @reply = EventReply.new(event_comment_id: params[:id], content: params[:content])
+        @reply = EventReply.new(event_comment_id: params[:id], content: params[:content], user_id: current_user.id)
         @reply.save
         redirect_to action: 'index'
     end

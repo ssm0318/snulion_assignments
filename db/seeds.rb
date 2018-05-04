@@ -13,15 +13,18 @@ User.create(email: 'thanks@snulion.com', name: 'j3', password: 'j3j3j3')
 user = User.all
 user.each do |user|
     for i in 1..2 do
-        Feed.create(
-            title: user.name + "의 feed",
-            content: user.name + "의 feed content",
-            user_id: user.id
-        )
-        Event.create(
-            title: user.name + "의 event",
-            datetime: "2018-01-01 01:00:00",
-            user_id: user.id
-        )
+        Feed.create(title: user.name + "의 feed", content: user.name + "의 feed content", user_id: user.id)
+        Event.create(title: user.name + "의 event", datetime: "2018-01-01 01:00:00", user_id: user.id)
     end
 end
+
+for j in 1..5 do
+    FeedComment.create(content: "댓글입니다~", feed_id: rand(1..Feed.all.size), user_id: rand(1..User.all.size))
+    EventComment.create(content: "댓글입니다~", event_id: rand(1..Event.all.size), user_id: rand(1..User.all.size))
+end
+
+for k in 1..5 do
+    FeedReply.create(content: "대댓글입니다!!!!!!!", feed_comment_id: rand(1..FeedComment.all.size), user_id: rand(1..User.all.size))
+    EventReply.create(content: "대댓글입니다!!!!!!!", event_comment_id: rand(1..EventComment.all.size), user_id: rand(1..User.all.size))
+end
+

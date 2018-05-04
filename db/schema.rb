@@ -22,10 +22,12 @@ ActiveRecord::Schema.define(version: 20180503104419) do
   end
 
   create_table "event_replies", force: :cascade do |t|
+    t.integer "user_id"
     t.string "content"
     t.integer "event_comment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_event_replies_on_user_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -47,10 +49,12 @@ ActiveRecord::Schema.define(version: 20180503104419) do
   end
 
   create_table "feed_replies", force: :cascade do |t|
+    t.integer "user_id"
     t.string "content"
     t.integer "feed_comment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_feed_replies_on_user_id"
   end
 
   create_table "feeds", force: :cascade do |t|

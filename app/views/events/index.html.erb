@@ -2,25 +2,34 @@
 <a href='/events/new'>Click here to create new event</a>
 
 <% @events.each do |e| %>
-	<div style='border: 1px solid black; margin: 10px;'>
-        <a href='/events/<%= e.id %>'/edit>Update</a>
-		<a href='/events/<%= e.id %>' data-method='DELETE'>Delete</a>
+    <div style='border: 1px solid black; margin: 10px;'>
+        <% if e.user == current_user %>
+            <a href='/events/<%= e.id %>'/edit>Update</a>
+            <a href='/events/<%= e.id %>' data-method='DELETE'>Delete</a>
+        <% end %>
 		<div><%= e.datetime %></div>
 		<div><%= e.title %></div>
         <div><%= e.user.email %></div>
         <div><%= e.user.name%></div>
+    
         <% e.event_comments.each_with_index do |comment, i| %>
             <div style='border: 3px solid green; margin: 15px;'>
-                <a href='/events/comments/<%= comment.id%>' data-method='DELETE'>Delete</a>
-                <%= i+1%>.
-                <%= comment.content %>
-                <%= comment.user.email %>
-                <%= comment.user.name %>
+                <% if comment.user == current_user %>
+                    <a href='/events/comments/<%= comment.id%>' data-method='DELETE'>Delete</a>
+                <% end %>
+                <%= i+1%>
+                <%= comment.content %><br>
+                Email: <%= comment.user.email %><br>
+                Name: <%= comment.user.name %>
                 <% comment.event_replies.each_with_index do |reply, j| %>
                     <div style='border: 2px solid blue; margin: 15px;'>
+                    <% if reply.user == current_user %>
                         <a href='/events/replies/<%= reply.id%>' data-method='DELETE'>Delete</a>
+                    <% end %>
                         <%= j+1%>
-                        <%= reply.content %>
+                        <%= reply.content %><br>
+                        Email: <%= reply.user.email %><br>
+                        Name: <%= reply.user.name %><br>
                     </div>
                 <% end %>
                 <form action='/events/<%= comment.id%>/reply_create' method='POST'>
@@ -28,7 +37,7 @@
                     <button type="submit">Reply</button>
                 </form>
             </div>
-        <% end %>
+            <% end %>
 
         <form action='/events/<%= e.id%>/comment_create' method='POST'>
             Comment: <input type="text" name="content">
