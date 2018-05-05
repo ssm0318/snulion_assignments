@@ -12,12 +12,19 @@
         <div>Email: <%= f.user.email %></div>
         <div>Name: <%= f.user.name%></div>
 
+            <% if f.liking_users.include? current_user %>
+                <a href="/feeds/<%= f.id %>/like">Like...NOT!!</a>
+            <% else %>
+                <a href="/feeds/<%= f.id%>/like">Like</a>
+            <% end %>
+
         <% f.feed_comments.each_with_index do |comment, i| %>
             <div style='border: 3px solid green; margin: 15px;'>
             <% if comment.user == current_user %>
                 <a href='/feeds/comments/<%= comment.id%>' data-method='DELETE'>Delete</a>
                 <a href='/feeds/comments/<%= comment.id%>/edit' data-method='POST'>Edit</a>
             <% end %>
+
                 <% if comment.id == @comment_edit_id %>
                     <form action='/feeds/<%= comment.id%>/comment_update' method='POST'>
                         Comment: <input type="text" name="content" value = '<%= comment.content%>'>

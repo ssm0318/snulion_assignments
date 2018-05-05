@@ -80,5 +80,16 @@ class FeedsController < ApplicationController
         updated_comment.save
         redirect_to action: 'index'
     end
+
+    def like
+        feed_like_hash = {user_id: current_user.id, feed_id: params[:id]}
+        like = FeedLike.where(feed_like_hash) #active record array 돌려줌. 그래서 destroy_all로 지움. 비어있을 경우를 확인할 수 있어 유용.
+        if like.empty?
+            FeedLike.create(feed_like_hash)
+        else
+            like.destroy_all #active record array는 pointer역할을 해줘서 model에서도 특정된 like가 사라짐.
+        end
+        redirect_to action: 'index'
+    end
 end
 

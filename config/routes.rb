@@ -31,4 +31,5 @@ Rails.application.routes.draw do
   post '/feeds/:id/comment_update' => 'feeds#comment_update'
   post '/events/comments/:id/edit' => 'events#comment_edit'
   post '/events/:id/comment_update' => 'events#comment_update'
+  get '/feeds/:id/like' => 'feeds#like'
 end
