@@ -2,16 +2,20 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   
-    #has_many :feeds
-    def feeds
-        Feed.where(user_id: self.id)        
-    end
+    #has_many :feeds #class_name: :Feed, foreign_key: :user_id (나를 찾아오려면 user_id를 사용해라) 와 같은 셈. 루비가 알아서 해줘서 생략됨.
+    # def feeds
+    #     Feed.where(user_id: self.id)        
+    # end
 
-    def commented_feeds
-        self.feed_comments.map do |x| # map은 array 형식으로 return 해줘!
-            x.feed #이래서 through 다음에는 복수가, source 다음에는 단수가 오게 됨.
-        end
-    end
+    # def commented_feeds
+    #     self.feed_comments.map do |x| # map은 array 형식으로 return 해줘!
+    #         x.feed #이래서 through 다음에는 복수가, source 다음에는 단수가 오게 됨.
+    #     end
+    # end
+    has_many :written_feeds, class_name: :Feed, foreign_key: :user_id #written feeds의 class를 모르니까 specify 해줘야함.
+# def :written_feeds
+#     Feed.where(user_id: id)
+# end
 
   has_many :feed_comments
   has_many :feed_replies
