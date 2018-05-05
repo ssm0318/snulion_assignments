@@ -1,5 +1,5 @@
 class Feed < ApplicationRecord
-    #belongs_to :user
+    belongs_to :user
     
     # def user
     #     User.find(self.user_id)

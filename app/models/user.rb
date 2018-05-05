@@ -2,7 +2,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   
-    #has_many :feeds #class_name: :Feed, foreign_key: :user_id (나를 찾아오려면 user_id를 사용해라) 와 같은 셈. 루비가 알아서 해줘서 생략됨.
+    has_many :feeds #class_name: :Feed, foreign_key: :user_id (나를 찾아오려면 user_id를 사용해라) 와 같은 셈. 루비가 알아서 해줘서 생략됨.
     # def feeds
     #     Feed.where(user_id: self.id)        
     # end
