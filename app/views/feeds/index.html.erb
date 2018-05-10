@@ -7,6 +7,15 @@
             <a href='/feeds/<%= f.id %>/edit'>Edit</a>
             <a href='/feeds/<%= f.id %>' data-method='DELETE'>Delete</a>
         <% end %>
+
+        <% if f.user != current_user %>
+            <% if f.user.followers.include? current_user %>
+                <a href="/feeds/<%= f.id %>/follow">Unfollow</a>
+            <% else %>
+                <a href='/feeds/<%= f.id %>/follow'>Follow</a>
+            <% end %>
+        <% end %>
+
         <div>Title: <%= f.title %></div>
         <div>Content: <%= f.content %></div>
         <div>Email: <%= f.user.email %></div>

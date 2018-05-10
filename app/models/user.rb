@@ -22,6 +22,12 @@ class User < ApplicationRecord
     has_many :feed_reply_likes
     has_many :liked_feed_replies, through: :feed_reply_likes, source: :feed_replies
 
+    has_many :follower_follows, class_name: :"Follow", foreign_key: :followee_id
+    has_many :followers, through: :follower_follows, source: :follower
+
+    has_many :followee_follows, class_name: :"Follow", foreign_key: :follower_id
+    has_many :followees, through: :followee_follows, source: :followee
+
   has_many :feed_comments
   has_many :feed_replies
 
@@ -31,6 +37,7 @@ class User < ApplicationRecord
 
   has_many :feed_likes
   has_many :liked_feeds, through: :feed_likes, source: :feed
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth_2]

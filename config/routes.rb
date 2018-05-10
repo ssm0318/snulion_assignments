@@ -34,4 +34,5 @@ Rails.application.routes.draw do
   get '/feeds/:id/like' => 'feeds#like'
   get '/feeds/comments/:id/like' => 'feeds#comment_like'
   get '/feeds/replies/:id/like' => 'feeds#reply_like'
+  get '/feeds/:id/follow' => 'feeds#feed_follow'
 end

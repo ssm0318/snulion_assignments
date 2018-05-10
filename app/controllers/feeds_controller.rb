@@ -113,5 +113,16 @@ class FeedsController < ApplicationController
         end
         redirect_to action: 'index'
     end
+
+    def feed_follow
+        feed_follow_hash = {follower_id: current_user.id, followee_id: Feed.find(params[:id]).user_id}
+        follow = Follow.where(feed_follow_hash)
+        if follow.empty?
+            Follow.create(feed_follow_hash)
+        else
+            follow.destroy_all
+        end
+        redirect_to action: 'index'
+    end
 end
 
