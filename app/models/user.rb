@@ -16,6 +16,11 @@ class User < ApplicationRecord
 # def :written_feeds
 #     Feed.where(user_id: id)
 # end
+    has_many :feed_comment_likes
+    has_many :liked_feed_comments, through: :feed_comment_likes, source: :feed_comments
+
+    has_many :feed_reply_likes
+    has_many :liked_feed_replies, through: :feed_reply_likes, source: :feed_replies
 
   has_many :feed_comments
   has_many :feed_replies

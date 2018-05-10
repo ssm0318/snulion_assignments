@@ -91,5 +91,27 @@ class FeedsController < ApplicationController
         end
         redirect_to action: 'index'
     end
+
+    def comment_like
+        feed_comment_like_hash = {user_id: current_user.id, feed_comment_id: params[:id]}
+        commentLike = FeedCommentLike.where(feed_comment_like_hash)
+        if commentLike.empty?
+            FeedCommentLike.create(feed_comment_like_hash)
+        else
+            commentLike.destroy_all
+        end
+        redirect_to action: 'index'
+    end
+
+    def reply_like
+        feed_reply_like_hash = {user_id: current_user.id, feed_reply_id: params[:id]}
+        replyLike = FeedReplyLike.where(feed_reply_like_hash)
+        if replyLike.empty?
+            FeedReplyLike.create(feed_reply_like_hash)
+        else
+            replyLike.destroy_all
+        end
+        redirect_to action: 'index'
+    end
 end
 

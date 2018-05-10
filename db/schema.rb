@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180505051523) do
+ActiveRecord::Schema.define(version: 20180509145946) do
 
   create_table "event_comments", force: :cascade do |t|
     t.integer "user_id"
@@ -39,6 +39,15 @@ ActiveRecord::Schema.define(version: 20180505051523) do
     t.index ["user_id"], name: "index_events_on_user_id"
   end
 
+  create_table "feed_comment_likes", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "feed_comment_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["feed_comment_id"], name: "index_feed_comment_likes_on_feed_comment_id"
+    t.index ["user_id"], name: "index_feed_comment_likes_on_user_id"
+  end
+
   create_table "feed_comments", force: :cascade do |t|
     t.integer "user_id"
     t.string "content"
@@ -62,6 +71,15 @@ ActiveRecord::Schema.define(version: 20180505051523) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_feed_replies_on_user_id"
+  end
+
+  create_table "feed_reply_likes", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "feed_reply_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["feed_reply_id"], name: "index_feed_reply_likes_on_feed_reply_id"
+    t.index ["user_id"], name: "index_feed_reply_likes_on_user_id"
   end
 
   create_table "feeds", force: :cascade do |t|

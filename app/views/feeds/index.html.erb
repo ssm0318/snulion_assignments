@@ -11,6 +11,7 @@
         <div>Content: <%= f.content %></div>
         <div>Email: <%= f.user.email %></div>
         <div>Name: <%= f.user.name%></div>
+        <div>Number of Comments: <%= f.feed_comments.size %></div>
 
             <% if f.liking_users.include? current_user %>
                 <a href="/feeds/<%= f.id %>/like">Like...NOT!!</a>
@@ -34,7 +35,13 @@
                     <%= i+1 %>
                     <%= comment.content %><br>
                     Email: <%= comment.user.email %><br>
-                    Name: <%= comment.user.name %>
+                    Name: <%= comment.user.name %><br>
+
+                    <% if comment.liking_feed_comment_users.include? current_user %>
+                        <a href="/feeds/comments/<%= comment.id %>/like">Like...NOT!!</a>
+                    <% else %>
+                        <a href="/feeds/comments/<%= comment.id%>/like">Like</a>
+                    <% end %>
 
                     <% comment.feed_replies.each_with_index do |reply, j| %>
                         <div style='border: 2px solid blue; margin: 15px;'>
@@ -45,6 +52,13 @@
                             <%= reply.content %><br>
                             Email: <%= reply.user.email %><br>
                             Name: <%= reply.user.name %><br>
+
+                            <% if reply.liking_feed_reply_users.include? current_user %>
+                                <a href="/feeds/replies/<%= reply.id%>/like">Like...NOT!!</a>
+                            <% else %>
+                                <a href="/feeds/replies/<%= reply.id%>/like">Like</a>
+                            <% end %>
+                            
                         </div>    
                     <% end %>
                 <% end %>
