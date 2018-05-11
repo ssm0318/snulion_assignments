@@ -19,7 +19,7 @@
         <div>Content: <%= f.content %></div>
         <div>Email: <%= f.user.email %></div>
         <div>Name: <%= f.user.name%></div>
-        <div>Number of Comments: <%= f.feed_comments.size %></div>
+        <div>Number of Comments: <%= f.feed_comments.map {|c| c.user_id}.uniq.size %></div>
         <div>Followers: <%= f.user.followers.map {|c| c.name}%>
 
             <% if f.liking_users.include? current_user %>
