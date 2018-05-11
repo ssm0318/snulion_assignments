@@ -1,14 +1,13 @@
 <h1>Feed Page</h1>
 <a href='/feeds/new'>New Feed</a>
+<div>My name: <%= current_user.name %>
 
 <% @feeds.each do |f| %>
     <div style='border: 1px solid black; margin: 10px;'>
         <% if f.user == current_user %>
             <a href='/feeds/<%= f.id %>/edit'>Edit</a>
             <a href='/feeds/<%= f.id %>' data-method='DELETE'>Delete</a>
-        <% end %>
-
-        <% if f.user != current_user %>
+        <% else %>
             <% if f.user.followers.include? current_user %>
                 <a href="/feeds/<%= f.id %>/follow">Unfollow</a>
             <% else %>
@@ -21,6 +20,7 @@
         <div>Email: <%= f.user.email %></div>
         <div>Name: <%= f.user.name%></div>
         <div>Number of Comments: <%= f.feed_comments.size %></div>
+        <div>Followers: <%= f.user.followers.map {|c| c.name}%>
 
             <% if f.liking_users.include? current_user %>
                 <a href="/feeds/<%= f.id %>/like">Like...NOT!!</a>
