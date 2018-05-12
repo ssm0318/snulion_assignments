@@ -1,8 +1,8 @@
-<h1>events page</h1>
+<h1>Events Page</h1>
 <a href='/events/new'>Click here to create new event</a>
 
 <% @events.each do |e| %>
-    <div style='border: 1px solid black; margin: 10px;'>
+    <div>
         <% if e.user == current_user %>
             <a href='/events/<%= e.id %>'/edit>Update</a>
             <a href='/events/<%= e.id %>' data-method='DELETE'>Delete</a>
@@ -13,7 +13,7 @@
         <div>Name: <%= e.user.name%></div>
     
         <% e.event_comments.each_with_index do |comment, i| %>
-            <div style='border: 3px solid green; margin: 15px;'>
+            <div>
                 <% if comment.user == current_user %>
                     <a href='/events/comments/<%= comment.id%>' data-method='DELETE'>Delete</a>
                     <a href='/events/comments/<%= comment.id%>/edit' data-method='POST'>Edit</a>
@@ -30,7 +30,7 @@
                     Email: <%= comment.user.email %><br>
                     Name: <%= comment.user.name %>
                     <% comment.event_replies.each_with_index do |reply, j| %>
-                        <div style='border: 2px solid blue; margin: 15px;'>
+                        <div>
                         <% if reply.user == current_user %>
                             <a href='/events/replies/<%= reply.id%>' data-method='DELETE'>Delete</a>
                         <% end %>

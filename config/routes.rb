@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     sessions: 'users/sessions',
     unlocks: 'users/unlocks',
   }
+  root 'feeds#index' #get '/' => 'feeds#index'와 동일
   get '/feeds' => 'feeds#index'
   get '/events' => 'events#index'
   get '/feeds/new' => 'feeds#new'
