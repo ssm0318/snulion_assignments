@@ -1,7 +1,11 @@
 <h1>Feed Update</h1>
 
-<form action='/feeds/<%= @feed.id%>' method='POST'>
-    Title: <input type="text" name="title" value='<%= @feed.title%>'>
-    Content: <input type="text" name="content" value = '<%= @feed.content%>'>
-    <button>Submit</button>
+
+ 
+<form action="/feeds/<%= @feed.id%>" method='POST'>
+    <div class="mdl-textfield mdl-js-textfield comment-textfield">
+        Title: <input class="mdl-textfield__input" type="text" id="sample1" name="title" value="<%= @feed.title%>"><br>
+        Content: <input class="mdl-textfield__input" type="text" id="sample1" name="content" value="<%= @feed.content%>">
+    </div>
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Update</button>
 </form>

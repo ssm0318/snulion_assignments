@@ -1,20 +1,35 @@
-<a href='/feeds/new'>New Feed</a>
 
 <% @feeds.each do |f| %>
-    <div class="demo-card-wide mdl-card mdl-shadow--2dp">
-        <div class="mdl-card__title">
+    <div class="demo-card-wide mdl-card mdl-shadow--2dp with-margin inline-block vert-top">
+        <div class="mdl-card__title no-top-bottom-padding">
             <ul class="demo-list-two mdl-list full-width no-padding no-margin">
             <li class="mdl-list__item mdl-list__item--two-line no-padding no-margin">
                 <span class="mdl-list__item-primary-content">
                 <i class="material-icons mdl-list__item-avatar">person</i>
                 <span><%= f.user.name%></span>
                 <span class="mdl-list__item-sub-title"><%= f.created_at.strftime("%Y-%m-%d") %></span>
-                </span> 
+                </span>
+                <% if current_user != f.user %>
+                    <% if current_user.followees.include? f.user %>
+                        <a class="mdl-list__item-secondary-action" href="/feeds/<%= f.id%>/follow"><i class="material-icons">person_add</i></a>
+                    <% else %>
+                        <a class="mdl-list__item-secondary-action mdl-color-text--grey-500" href="/feeds/<%= f.id%>/follow"><i class="material-icons">person_add</i></a>
+                    <% end %>
+                    <% if f.liking_users.include? current_user %>
+                        <a class="mdl-list__item-secondary-action with-left-margin" href="/feeds/<%= f.id %>/like"><i class="material-icons">favorite</i></a>
+                    <% else %>
+                        <a class="mdl-list__item-secondary-action with-left-margin" href="/feeds/<%= f.id %>/like"><i class="material-icons">favorite_border</i></a>
+                    <% end %>
+                <% else %>
+                    <a class="mdl-list__item-secondary-action mdl-color-text--grey-500" href="/feeds/<%= f.id%>/edit"><i class="material-icons">create</i></a>
+                    <a class="mdl-list__item-secondary-action mdl-color-text--grey-500 with-left-margin" href="/feeds/<%= f.id%>" data-method='DELETE'><i class="material-icons">delete</i></a>
+                <% end %>
+                
             </li>
             </ul>
         </div>
     <div class="mdl-card__supporting-text">
-        <div><%= f.title%></div>
+        <div class="highlight"><%= f.title%></div>
         <div><%= f.content%></div>
     </div>
     <div class="mdl-card__actions mdl-card--border">
@@ -24,116 +39,39 @@
             
         <% f.feed_comments.each do |c| %>
             <ul class="demo-list-three mdl-list no-padding no-margin">
-            <li class="mdl-list__item mdl-list__item--three-line no-padding no-margin">
-                <span class="mdl-list__item-primary-content">
-                <span><%= c.user.name%></span>
-                <span class="mdl-list__item-text-body"><%= c.content %></span>
-                </span>
-                <% if c.user == current_user%>
-                    <span clas="mdl-list__item-secondary-content">
-                        <a class="mdl-list__item-secondary-action" href="#">
-                            <i class="material-icons">delete</i>
-                        </a>
-                    <span>
-                <% end %>
-            </li>
-            </ul>
-            <% if c.user == current_user %>
-                <a href='/feeds/comments/<%= c.id%>' data-method='DELETE'>Delete</a>
-                <a href='/feeds/comments/<%= c.id%>/edit' data-method='POST'>Edit</a>
-            <% end %>
-        <% end %>
-        <form action='/feeds/<%= f.id%>/comment_create' method='POST'>
-            Comment: <input type="text" name="content">
-            <button type="submit">Comment</button>
-        </form>
-    </div>
-    <div class="mdl-card__menu">
-        <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-        <i class="material-icons">share</i>
-        </button>
-    </div>
-    </div>
-
-    <div>
-        <% if f.user == current_user %>
-            <a href='/feeds/<%= f.id %>/edit'>Edit</a>
-            <a href='/feeds/<%= f.id %>' data-method='DELETE'>Delete</a>
-        <% else %>
-            <% if f.user.followers.include? current_user %>
-                <a href="/feeds/<%= f.id %>/follow">Unfollow</a>
-            <% else %>
-                <a href='/feeds/<%= f.id %>/follow'>Follow</a>
-            <% end %>
-        <% end %>
-
-        <div>Title: <%= f.title %></div>
-        <div>Content: <%= f.content %></div>
-        <div>Email: <%= f.user.email %></div>
-        <div>Name: <%= f.user.name%></div>
-        <div>Number of Comments: <%= f.feed_comments.map {|c| c.user_id}.uniq.size %></div>
-        <div>Followers: <%= f.user.followers.map {|c| c.name}%></div>
-
-            <% if f.liking_users.include? current_user %>
-                <a href="/feeds/<%= f.id %>/like">Like...NOT!!</a>
-            <% else %>
-                <a href="/feeds/<%= f.id%>/like">Like</a>
-            <% end %>
-
-        <% f.feed_comments.each_with_index do |comment, i| %>
-            <div>
-            <% if comment.user == current_user %>
-                <a href='/feeds/comments/<%= comment.id%>' data-method='DELETE'>Delete</a>
-                <a href='/feeds/comments/<%= comment.id%>/edit' data-method='POST'>Edit</a>
-            <% end %>
-
-                <% if comment.id == @comment_edit_id %>
-                    <form action='/feeds/<%= comment.id%>/comment_update' method='POST'>
-                        Comment: <input type="text" name="content" value = '<%= comment.content%>'>
-                        <button type="submit">Confirm Edit</button>
-                    </form>
-                <% else %>
-                    <%= i+1 %>
-                    <%= comment.content %><br>
-                    Email: <%= comment.user.email %><br>
-                    Name: <%= comment.user.name %><br>
-
-                    <% if comment.liking_feed_comment_users.include? current_user %>
-                        <a href="/feeds/comments/<%= comment.id %>/like">Like...NOT!!</a>
+                <li class="mdl-list__item mdl-list__item--three-line">
+                    <span class="mdl-list__item-primary-content">
+                    <%= c.user.name %>
+                    <span class="mdl-list__item-text-body no-padding"><%= c.content%></span>
+                    </span>
+                    <% if c.user == current_user%>
+                        <a class="mdl-list__item-secondary-action with-left-margin" href="#"><i class="material-icons">create</i></a>
+                        <a class="mdl-list__item-secondary-action with-left-margin" href="/feeds/comments/<%= c.id%>" data-method='DELETE'><i class="material-icons">delete</i></a>
                     <% else %>
-                        <a href="/feeds/comments/<%= comment.id%>/like">Like</a>
-                    <% end %>
-
-                    <% comment.feed_replies.each_with_index do |reply, j| %>
-                        <div>
-                        <% if reply.user == current_user %>
-                            <a href='/feeds/replies/<%= reply.id%>' data-method='DELETE'>Delete</a>
+                        <% if c.liking_feed_comment_users.include? current_user %>
+                            <a class="mdl-list__item-secondary-action with-left-margin" href="/feeds/comments/<%= c.id%>/like"><i class="material-icons">favorite</i></a>
+                        <% else %>
+                            <a class="mdl-list__item-secondary-action with-left-margin" href="/feeds/comments/<%= c.id%>/like"><i class="material-icons">favorite_border</i></a>
                         <% end %>
-                            <%= j+1 %>
-                            <%= reply.content %><br>
-                            Email: <%= reply.user.email %><br>
-                            Name: <%= reply.user.name %><br>
-
-                            <% if reply.liking_feed_reply_users.include? current_user %>
-                                <a href="/feeds/replies/<%= reply.id%>/like">Like...NOT!!</a>
-                            <% else %>
-                                <a href="/feeds/replies/<%= reply.id%>/like">Like</a>
-                            <% end %>
-                            
-                        </div>    
                     <% end %>
-                <% end %>
-
-                <form action='/feeds/<%= comment.id%>/reply_create' method='POST'>
-                    Reply: <input type="text" name="content">
-                    <button type="submit">Reply</button>
-                </form>
-            </div>
+                </li>
+            </ul>
         <% end %>
 
-        <form action='/feeds/<%= f.id%>/comment_create' method='POST'>
-            Comment: <input type="text" name="content">
-            <button type="submit">Comment</button>
+        <form action="/feeds/<%= f.id%>/comment_create" method='POST'>
+            <span class="mdl-textfield mdl-js-textfield comment-textfield">
+                <input class="mdl-textfield__input" type="text" id="sample1" name="content">
+            </span>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored float-right">Comment</button>
         </form>
+    </div>
     </div>
 <% end %>
+
+
+<a href='/feeds/new'>
+<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bottom-button">
+  <i class="material-icons">add</i>
+</button>
+</a>
+

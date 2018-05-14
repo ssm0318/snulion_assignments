@@ -1,6 +1,9 @@
-<h1>Edit Post</h1>
-<form action='/events/<%= @event.id%>' method='POST'>
-    Date+Time: <input type="datetime-local" name="datetime" value="<%= @event.datetime%>">
-    Title: <input type="text" name="title" value="<%= @event.title%>">
-    <button>Submit</button>
+<h2>Edit Event</h2>
+
+<form action="/events/<%= @event.id%>" method='POST'>
+    <div class="mdl-textfield mdl-js-textfield comment-textfield">
+        Date/Time: <input class="mdl-textfield__input" type="datetime-local" id="sample1" name="datetime" value="<%= @event.datetime%>"><br>
+        Title: <input class="mdl-textfield__input" type="text" id="sample1" name="title" value="<%= @event.title%>">
+    </div>
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Update</button>
 </form>

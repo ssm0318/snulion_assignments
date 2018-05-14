@@ -1,55 +1,77 @@
-<h1>Events Page</h1>
-<a href='/events/new'>Click here to create new event</a>
 
 <% @events.each do |e| %>
-    <div>
-        <% if e.user == current_user %>
-            <a href='/events/<%= e.id %>'/edit>Update</a>
-            <a href='/events/<%= e.id %>' data-method='DELETE'>Delete</a>
-        <% end %>
-		<div><%= e.datetime %></div>
-		<div>Title: <%= e.title %></div>
-        <div>Email: <%= e.user.email %></div>
-        <div>Name: <%= e.user.name%></div>
-    
-        <% e.event_comments.each_with_index do |comment, i| %>
-            <div>
-                <% if comment.user == current_user %>
-                    <a href='/events/comments/<%= comment.id%>' data-method='DELETE'>Delete</a>
-                    <a href='/events/comments/<%= comment.id%>/edit' data-method='POST'>Edit</a>
-                <% end %>
-
-                <% if comment.id == @updating_comment_id %>
-                    <form action='/events/<%= comment.id%>/comment_update' method='POST'>
-                        Comment: <input type="text" name="content" value='<%=comment.content%>'>
-                        <button type="submit">Confirm Edit</button>
-                    </form>
-                <% else %>
-                    <%= i+1%>
-                    <%= comment.content %><br>
-                    Email: <%= comment.user.email %><br>
-                    Name: <%= comment.user.name %>
-                    <% comment.event_replies.each_with_index do |reply, j| %>
-                        <div>
-                        <% if reply.user == current_user %>
-                            <a href='/events/replies/<%= reply.id%>' data-method='DELETE'>Delete</a>
-                        <% end %>
-                            <%= j+1%>
-                            <%= reply.content %><br>
-                            Email: <%= reply.user.email %><br>
-                            Name: <%= reply.user.name %><br>
-                        </div>
+    <div class="demo-card-wide mdl-card mdl-shadow--2dp with-margin inline-block vert-top">
+        <div class="mdl-card__title no-top-bottom-padding">
+            <ul class="demo-list-two mdl-list full-width no-padding no-margin">
+            <li class="mdl-list__item mdl-list__item--two-line no-padding no-margin">
+                <span class="mdl-list__item-primary-content">
+                <i class="material-icons mdl-list__item-avatar">person</i>
+                <span><%= e.user.name%></span>
+                <span class="mdl-list__item-sub-title"><%= e.created_at.strftime("%Y-%m-%d") %></span>
+                </span>
+                <% if current_user != e.user %>
+                    <% if current_user.followees.include? e.user %>
+                        <a class="mdl-list__item-secondary-action" href="/events/<%= e.id%>/follow"><i class="material-icons">person_add</i></a>
+                    <% else %>
+                        <a class="mdl-list__item-secondary-action mdl-color-text--grey-500" href="/events/<%= e.id%>/follow"><i class="material-icons">person_add</i></a>
                     <% end %>
-                    <form action='/events/<%= comment.id%>/reply_create' method='POST'>
-                        Reply: <input type="text" name="content">
-                        <button type="submit">Reply</button>
-                    </form>
-                </div>
-                <form action='/events/<%= e.id%>/comment_create' method='POST'>
-                    Comment: <input type="text" name="content">
-                    <button type="submit">Comment</button>
-                </form>
-            <% end %>
+                    <% if e.liking_users.include? current_user %>
+                        <a class="mdl-list__item-secondary-action with-left-margin" href="/events/<%= e.id %>/like"><i class="material-icons">favorite</i></a>
+                    <% else %>
+                        <a class="mdl-list__item-secondary-action with-left-margin" href="/events/<%= e.id %>/like"><i class="material-icons">favorite_border</i></a>
+                    <% end %>
+                <% else %>
+                <a class="mdl-list__item-secondary-action with-left-margin mdl-color-text--grey-500" href="/events/<%= e.id%>/edit"><i class="material-icons">create</i></a>
+                <a class="mdl-list__item-secondary-action mdl-color-text--grey-500 with-left-margin" href="/events/<%= e.id%>" data-method='DELETE'><i class="material-icons">delete</i></a>
+                <% end %>
+                
+            </li>
+            </ul>
+        </div>
+    <div class="mdl-card__supporting-text">
+        <div class="highlight"><%= e.title%></div>
+        <div><%= e.datetime%></div>
+    </div>
+    <div class="mdl-card__actions mdl-card--border">
+        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+            View More Comments
+        </a>
+            
+        <% e.event_comments.each do |c| %>
+            <ul class="demo-list-three mdl-list no-padding no-margin">
+                <li class="mdl-list__item mdl-list__item--three-line">
+                    <span class="mdl-list__item-primary-content">
+                    <%= c.user.name %>
+                    <span class="mdl-list__item-text-body"><%= c.content%></span>
+                    </span>
+                    <% if c.user == current_user%>
+                    <a class="mdl-list__item-secondary-action with-left-margin" href="#"><i class="material-icons">create</i></a>
+                    <a class="mdl-list__item-secondary-action with-left-margin" href="/events/comments/<%= c.id%>" data-method='DELETE'><i class="material-icons">delete</i></a>
+                    <% else %>
+                        <% if c.liking_event_comment_users.include? current_user %>
+                            <a class="mdl-list__item-secondary-action with-left-margin" href="/events/comments/<%= c.id%>/like"><i class="material-icons">favorite</i></a>
+                        <% else %>
+                            <a class="mdl-list__item-secondary-action with-left-margin" href="/events/comments/<%= c.id%>/like"><i class="material-icons">favorite_border</i></a>
+                        <% end %>
+                    <% end %>
+                </li>
+            </ul>
         <% end %>
+
+        <form action="/events/<%= e.id%>/comment_create" method='POST'>
+            <span class="mdl-textfield mdl-js-textfield comment-textfield">
+                <input class="mdl-textfield__input" type="text" id="sample1" name="content">
+            </span>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored float-right">Comment</button>
+        </form>
+    </div>
     </div>
 <% end %>
+
+
+<a href='/events/new'>
+<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bottom-button">
+  <i class="material-icons">add</i>
+</button>
+</a>
+

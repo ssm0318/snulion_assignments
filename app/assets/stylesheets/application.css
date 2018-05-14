@@ -21,9 +21,72 @@
  }
 
  .no-padding {
-     padding: 0;
+     padding: 0px;
  }
 
  .no-margin {
-     margin: 0;
+     margin: 0px;
+ }
+
+ .with-padding {
+     padding: 10px;
+ }
+
+ .with-margin {
+     margin: 30px;
+ }
+
+ .no-top-bottom-padding {
+     padding-top: 0px;
+     padding-bottom: 0px;
+ }
+
+ .with-left-margin {
+     margin-left: 10px;
+ }
+
+ .highlight {
+     color: black;
+     font-weight: bold;
+ }
+
+ .comment-content {
+    margin-left: 15px;
+    font-weight: light;
+ }
+
+ .larger-width {
+     width: 70px;
+ }
+
+ .with-right-margin {
+     margin-right: 15px;
+ }
+
+ .inline-block {
+     display: inline-block;
+ }
+
+ .float-right {
+    float: right;
+ }
+
+ .comment-textfield {
+     margin: 0px 15px 0px 15px;
+     width: 170px;
+ }
+
+ .vert-top {
+     vertical-align: top;
+ }
+
+ .bottom-button {
+     position: absolute;
+     position: fixed;
+     bottom: 20px; 
+     right: 20px;
+ }
+
+ .margin-top {
+     margin-top: 5px;
  }

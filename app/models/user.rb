@@ -19,6 +19,9 @@ class User < ApplicationRecord
     has_many :feed_comment_likes
     has_many :liked_feed_comments, through: :feed_comment_likes, source: :feed_comments
 
+    has_many :event_comment_likes
+    has_many :liked_event_comments, through: :event_comment_likes, source: :event_comments
+
     has_many :feed_reply_likes
     has_many :liked_feed_replies, through: :feed_reply_likes, source: :feed_replies
 
@@ -37,6 +40,9 @@ class User < ApplicationRecord
 
   has_many :feed_likes
   has_many :liked_feeds, through: :feed_likes, source: :feed
+
+  has_many :event_likes
+  has_many :liked_events, through: :event_likes, source: :event
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,

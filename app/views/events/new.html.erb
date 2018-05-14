@@ -1,6 +1,9 @@
 <h1>New Event</h1>
-<form action='/events' method='POST'>
-    Date+Time: <input type="datetime-local" name="datetime">
-    Title: <input type="text" name="title">
-    <button>Submit</button>
+
+<form action="/events" method='POST'>
+    <div class="mdl-textfield mdl-js-textfield comment-textfield">
+        Date/Time: <input class="mdl-textfield__input" type="datetime-local" id="sample1" name="datetime"><br>
+        Title: <input class="mdl-textfield__input" type="text" id="sample1" name="title">
+    </div>
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Submit</button>
 </form>

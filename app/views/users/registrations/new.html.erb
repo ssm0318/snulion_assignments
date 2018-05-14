@@ -1,11 +1,11 @@
-<h2>Sign up</h2>
+<h2 class="with-left-margin">Sign up</h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  <div class="field mdl-textfield mdl-js-textfield comment-textfield">
+    <%= f.label :email %><br>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "mdl-textfield__input margin-top" %>
   </div>
 
   <div class="field">

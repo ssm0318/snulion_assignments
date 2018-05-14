@@ -1,6 +1,10 @@
 <h1>New Feed</h1>
-<form action='/feeds' method='POST'>
-    Title: <input type="text" name="title">
-    Content: <input type="text" name="content">
-    <button>Submit</button>
+
+
+<form action="/feeds" method='POST'>
+    <div class="mdl-textfield mdl-js-textfield comment-textfield">
+        Title: <input class="mdl-textfield__input" type="text" id="sample1" name="title"><br>
+        Content: <input class="mdl-textfield__input" type="text" id="sample1" name="content">
+    </div>
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Post</button>
 </form>
