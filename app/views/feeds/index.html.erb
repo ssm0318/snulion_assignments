@@ -40,8 +40,10 @@
         <% f.feed_comments.each_with_index do |c, i| %>
             <ul class="demo-list-three mdl-list no-padding no-margin">
                 <% if i==0 %>
-                    <
-                <li class="mdl-list__item mdl-list__item--three-line">
+                    <li class="mdl-list__item mdl-list__item--three-line comment newest-comment">
+                <% else %>
+                    <li class="mdl-list__item mdl-list__item--three-line comment">
+                <% end %>
                     <span class="mdl-list__item-primary-content">
                     <%= c.user.name %>
                     <span class="mdl-list__item-text-body no-padding"><%= c.content%></span>
