@@ -33,12 +33,14 @@
         <div><%= f.content%></div>
     </div>
     <div class="mdl-card__actions mdl-card--border">
-        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+        <a class="btn-more-comment mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
             View More Comments
         </a>
             
-        <% f.feed_comments.each do |c| %>
+        <% f.feed_comments.each_with_index do |c, i| %>
             <ul class="demo-list-three mdl-list no-padding no-margin">
+                <% if i==0 %>
+                    <
                 <li class="mdl-list__item mdl-list__item--three-line">
                     <span class="mdl-list__item-primary-content">
                     <%= c.user.name %>
@@ -105,10 +107,10 @@
 
   $(document).ready(function(){
     $(".btn-more-comment").on('click', function(){
-      $(this).toggleClass("hiding-comment"); //toggleClass가 "hiding-comment"라는 class를 있으면 빼주고 없으면 넣어주는 메소드.
+      $(this).toggleClass("hiding-comment"); #toggleClass가 "hiding-comment"라는 class를 있으면 빼주고 없으면 넣어주는 메소드.
       if($(this).hasClass("hiding-comment")) {
-        //같은 계층의 애들 중에 ul element만 찾아라. //.넣어서 쓰는건 class, 없는건 element. //find는 하위계층에서 찾아줌. //맨 첫 댓글인 newest comment만 제외
-        $(this).siblings("ul").find(".comment").not(".newest-comment").show()
+        //같은 계층의 애들 중에 ul element만 찾아라. #.넣어서 쓰는건 class, 없는건 element. 
+        $(this).siblings("ul").find(".comment").not(".newest-comment").show() #find는 하위계층에서 찾아줌. //맨 첫 댓글인 newest comment만 제외
         //contents는 하위계층에 있는 것을 다 보여줌, 그 중 0번째 (첫번째) content인 '댓글 더보기' 가져옴
         $(this).contents().get(0).nodeValue = "댓글 숨기기";
       } else {
