@@ -62,12 +62,8 @@
             </ul>
         <% end %>
 
-        <form action="/feeds/<%= f.id%>/comment_create" method='POST'>
-            <span class="mdl-textfield mdl-js-textfield comment-textfield">
-                <input class="mdl-textfield__input" type="text" id="sample1" name="content">
-            </span>
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored float-right">Comment</button>
-        </form>
+        <%= render partial: "comment_form", locals: {f_id: f.id} %>   
+
     </div>
     </div>
 <% end %>
