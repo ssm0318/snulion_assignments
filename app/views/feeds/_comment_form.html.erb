@@ -1,6 +1,6 @@
 <!-- _comment_form.html.erb -->
 
-<form action="/feeds/f_id/comment_create" method="POST">
+<form action="/feeds/<%= f_id%>/comment_create" method="POST">
   <!-- <%#=f.id%> => <%#=id%> --> 
   <span class="mdl-textfield mdl-js-textfield comment-textfield">
     <input class="mdl-textfield__input" type="text" name="content" id="content"></span>

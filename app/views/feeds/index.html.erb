@@ -22,7 +22,9 @@
                     <% end %>
                 <% else %>
                     <a class="mdl-list__item-secondary-action mdl-color-text--grey-500" href="/feeds/<%= f.id%>/edit"><i class="material-icons">create</i></a>
-                    <a class="mdl-list__item-secondary-action mdl-color-text--grey-500 with-left-margin" href="/feeds/<%= f.id%>" data-method='DELETE'><i class="material-icons">delete</i></a>
+                    <a class="mdl-list__item-secondary-action mdl-color-text--grey-500 with-left-margin ajax-delete" href="/feeds/<%= f.id%>" data-method='DELETE'
+                      , :data => {:feed_id => f.id, :comment_id => c.id} do %>
+                    <i class="material-icons">delete</i></a>
                 <% end %>
                 
             </li>
@@ -40,9 +42,9 @@
         <% f.feed_comments.each_with_index do |c, i| %>
             <ul class="demo-list-three mdl-list no-padding no-margin">
                 <% if i==(f.feed_comments.length-1) %>
-                    <li class="mdl-list__item mdl-list__item--three-line comment newest-comment">
+                    <li class="mdl-list__item mdl-list__item--three-line comment newest-comment comment-<%=c.id%>">
                 <% else %>
-                    <li class="mdl-list__item mdl-list__item--three-line comment" style="display:none;">
+                    <li class="mdl-list__item mdl-list__item--three-line comment comment-<%=c.id%>" style="display:none;">
                 <% end %>
                     <span class="mdl-list__item-primary-content">
                     <%= c.user.name %>
@@ -119,4 +121,22 @@
   });
 </script>
       
+$(document).ready(function(){
+	$(".ajax-delete").on("click", function(event) {
+  		event.stopPropagation()
+   		event.preventDefault()
+   		const feed_id=$(this).data("feed-id")
+   		const comment_id=$(this).data("comment-id")
 
+   		$.ajax({
+   			method:"DELETE",
+   			dataType:"JSON",
+   			url: "/feeds/" + comment_id + "/comment/destroy",
+   			success: function(data){
+   				console.log("success!!");
+   				$(".comment-" + comment_id).remove();
+   				return;
+   			}
+  		});
+   	});
+});
